@@ -1,0 +1,94 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Artwork {
+  artist: String!
+  category: Float!
+  culture: Float!
+  description: String!
+  domestic_free_shipping: Boolean!
+  domestic_shipping: Boolean!
+  exclude_locations: [String!]
+  features: String!
+  findAll(populate: Boolean!): Artwork!
+  id: ID!
+  international_free_shipping: Boolean!
+  international_shipping: Boolean!
+  item_location: String!
+  medium: String!
+  name: String!
+  offer_local_pickup: Float!
+  origin: String!
+  payment_options: [String!]!
+  price: Float!
+  quality_type: String!
+  reserverd_price: Float!
+  return_domestic: Boolean!
+  return_international: Boolean!
+  sales_tax: Float!
+  seller_id: String!
+  shipping_cost: Float!
+  subcategory: Float!
+  year: String!
+}
+
+input CreateArtworkDto {
+  artist: String!
+  category: Float!
+  culture: Float!
+  description: String!
+  domestic_free_shipping: Boolean = false
+  domestic_shipping: Boolean = false
+  exclude_locations: [String!]!
+  features: String = ""
+  international_free_shipping: Boolean = false
+  international_shipping: Boolean = false
+  item_location: String!
+  medium: String!
+  name: String!
+  offer_local_pickup: Float!
+  origin: String = ""
+  payment_options: [String!]!
+  price: Float!
+  quality_type: String = ""
+  reserverd_price: Float!
+  return_domestic: Boolean = false
+  return_international: Boolean = false
+  sales_tax: Float!
+  seller_id: String!
+  shipping_cost: Float!
+  subcategory: Float!
+  year: String!
+}
+
+input CreateLocationDto {
+  country: String!
+}
+
+input CreatePaymentDto {
+  name: String!
+}
+
+type Locations {
+  country: String!
+  id: ID!
+}
+
+type Mutation {
+  create(body: CreateArtworkDto!): Artwork!
+  createLocation(country: CreateLocationDto!): Locations!
+  createPaymentOption(newOption: CreatePaymentDto!): PaymentOption!
+}
+
+type PaymentOption {
+  id: ID!
+  name: String!
+}
+
+type Query {
+  deleteOne(country: String!): Locations!
+  findArt(id: String!): Artwork!
+  findByName(name: String!): PaymentOption!
+  findOne(country: String!): Locations!
+}
