@@ -1,0 +1,241 @@
+.card-container.card {
+    max-width: 600px !important;
+    padding: 40px 40px;
+}
+
+.card {
+    background-color: #FFF;
+    padding: 20px 25px 30px;
+    margin: 0 auto 25px;
+    margin-top: 50px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+form {
+    --background: white;
+    --border: rgba(0, 0, 0, 0.125);
+    --borderDark: rgba(0, 0, 0, 0.25);
+    --borderDarker: rgba(0, 0, 0, 0.5);
+    --bgColorH: 0;
+    --bgColorS: 0%;
+    --bgColorL: 98%;
+    --fgColorH: 210;
+    --fgColorS: 50%;
+    --fgColorL: 38%;
+    --shadeDark: 0.3;
+    --shadeLight: 0.7;
+    --shadeNormal: 0.5;
+    --borderRadius: 0.125rem;
+    --highlight: #306090;
+    background: white;
+    border-radius: var(--borderRadius);
+    box-shadow: 0 1rem 1rem -0.75rem var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+form a:hover {
+    color: hsl(var(--fgColorH), var(--fgColorS), calc(var(--fgColorL) * 0.85));
+    transition: color 0.25s;
+}
+
+form a:focus {
+    color: hsl(var(--fgColorH), var(--fgColorS), calc(var(--fgColorL) * 0.85));
+    outline: 1px dashed hsl(var(--fgColorH), calc(var(--fgColorS) * 2), calc(var(--fgColorL) * 1.15));
+    outline-offset: 2px;
+}
+
+form>div {
+    order: 2;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+}
+
+label>span {
+    color: var(--borderDarker);
+    display: block;
+    font-size: 0.825rem;
+    margin-top: 0.625rem;
+    order: 1;
+    transition: all 0.25s;
+}
+
+label input select {
+    order: 2;
+    outline: none;
+}
+
+label input::placeholder {
+    color: var(--borderDark);
+}
+
+label:hover span {
+    color: hsl(var(--fgColorH), var(--fgColorS), var(--fgColorL));
+}
+
+input[type="checkbox"]+div label:hover span::before,
+label:hover input.text {
+    border-color: hsl(var(--fgColorH), var(--fgColorS), var(--fgColorL));
+}
+
+label input.text:focus,
+label input.text:active {
+    border-color: hsl(var(--fgColorH), calc(var(--fgColorS) * 2), calc(var(--fgColorL) * 1.15));
+    box-shadow: 0 1px hsl(var(--fgColorH), calc(var(--fgColorS) * 2), calc(var(--fgColorL) * 1.15));
+}
+
+input.text:focus+span,
+input.text:active+span {
+    color: hsl(var(--fgColorH), calc(var(--fgColorS) * 2), calc(var(--fgColorL) * 1.15));
+}
+
+input {
+    border: 1px solid var(--border);
+    border-radius: var(--borderRadius);
+    box-sizing: border-box;
+    font-size: 1rem;
+    height: 2.25rem;
+    line-height: 1.25rem;
+    margin-top: 0.25rem;
+    order: 2;
+    padding: 0.25rem 0.5rem;
+    transition: all 0.25s;
+}
+
+select {
+    border: 1px solid var(--border);
+    border-radius: var(--borderRadius);
+    box-sizing: border-box;
+    font-size: 1rem;
+    height: 2.25rem;
+    line-height: 1.25rem;
+    margin-top: 0.25rem;
+    order: 2;
+    padding: 0.25rem 0.5rem;
+    transition: all 0.25s;
+    width: 100%;
+}
+
+input[type="submit"] {
+    color: hsl(var(--bgColorH), var(--bgColorS), var(--bgColorL));
+    background: hsl(var(--fgColorH), var(--fgColorS), var(--fgColorL));
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-top: 0.625rem;
+    order: 4;
+    outline: 1px dashed transparent;
+    outline-offset: 2px;
+    padding-left: 0;
+    text-transform: uppercase;
+}
+
+input[type="checkbox"]:focus+label span::before {
+    outline: 1px dashed hsl(var(--fgColorH), calc(var(--fgColorS) * 2), calc(var(--fgColorL) * 1.15));
+    outline-offset: 2px;
+}
+
+.checkbox {
+    --border-default: #bbbbc1;
+    --border-hover: #9898a3;
+    --active: #6E7BF2;
+    --active-tick: #ffffff;
+    display: block;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+    svg {
+        display: block;
+        position: absolute;
+    }
+    input {
+        display: block;
+        outline: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 36% / 36%;
+        box-shadow: inset 0 0 0 1.5px var(--border, var(--border-default));
+        background: var(--background, transparent);
+        transition: background .25s linear, box-shadow .25s linear;
+        &+svg {
+            width: 21px;
+            height: 18px;
+            left: 0;
+            top: 0;
+            color: var(--active);
+            .tick {
+                stroke-dasharray: 20;
+                stroke-dashoffset: var(--stroke-dashoffset, 20);
+                transition: stroke-dashoffset .2s;
+                &.mask {
+                    stroke: var(--active-tick);
+                }
+            }
+            &+svg {
+                width: 11px;
+                height: 11px;
+                fill: none;
+                stroke: var(--active);
+                stroke-width: 1.25;
+                stroke-linecap: round;
+                top: -6px;
+                right: -10px;
+                stroke-dasharray: 4.5px;
+                stroke-dashoffset: 13.5px;
+                pointer-events: none;
+                animation: var(--animation, none) .2s ease .175s;
+            }
+        }
+        &:checked {
+            --background: var(--active);
+            --border: var(--active);
+            &+svg {
+                --stroke-dashoffset: 0;
+                &+svg {
+                    --animation: check;
+                }
+            }
+        }
+    }
+    &:hover {
+        input {
+            &:not(:checked) {
+                --border: var(--border-hover);
+            }
+        }
+    }
+}
+
+@keyframes check {
+    100% {
+        stroke-dashoffset: 4.5px;
+    }
+}
+
+.btn {
+    background-color: #FFC300;
+    border-radius: 5rem;
+    border: #FFC300;
+    width: 100%;
+}
+
+.req {
+    color: #dd6666;
+    margin-left: 0.125rem;
+}

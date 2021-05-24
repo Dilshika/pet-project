@@ -1,0 +1,193 @@
+<div class="col-md-12">
+    <div class="card card-container">
+        <form *ngIf="!isSuccessful" name="form" (ngSubmit)="signinForm.form.valid && onSubmit()" #signinForm="ngForm" novalidate>
+            <div class="segment">
+                <h1>Sell Items</h1>
+            </div>
+            <!--Name-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Name</label>
+
+                <input type="text" class="form-control" name=name [(ngModel)]="form.name" required #name="ngModel">
+                <div class="alert-danger" *ngIf="name.errors && signinForm.submitted">
+                    <div *ngIf="name.errors.required">Name is Required</div>
+                </div>
+            </div>
+            <!--Category-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Category</label>
+                <select id="category" name=category [(ngModel)]="form.category" required #category="ngModel">
+                <option *ngFor="let category of Category" [(ngValue)]="category.id">{{category.name}}</option>
+            </select>
+                <div class="alert-danger" *ngIf="category.errors && signinForm.submitted">
+                    <div *ngIf="category.errors.required"> Category is Required</div>
+                </div>
+            </div>
+            <!--SubCategory-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Sub Category</label>
+                <select id="subcategory" name=subcategory [(ngModel)]="form.subcategory" required subcategory #subcategory="ngModel">
+                    <option *ngFor="let subcategory of SubCategory" [(ngValue)]="subcategory.id">{{subcategory.name}}</option>
+                </select>
+                <div class="alert-danger" *ngIf="subcategory.errors && signinForm.submitted">
+                    <div *ngIf="subcategory.errors.required">SubCategory is Required</div>
+                </div>
+            </div>
+            <!--Culture-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Culture</label>
+                <select id="culture" name=culture [(ngModel)]="form.culture" required #culture="ngModel">
+                    <option *ngFor="let culture of Culture" [(ngValue)]="culture.id">{{culture.name}}</option>
+                </select>
+                <div class="alert-danger" *ngIf="culture.errors && signinForm.submitted">
+                    <div *ngIf="culture.errors.required"> Culture is Required</div>
+                </div>
+            </div>
+            <!--Features-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Features</label>
+                <input type="text" class="form-control" name=features [(ngModel)]="form.features" required #features="ngModel">
+                <div class="alert-danger" *ngIf="features.errors && signinForm.submitted">
+                    <div *ngIf="features.errors.required"> Features is Required</div>
+                </div>
+            </div>
+            <!--Origin-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Origin</label>
+                <input type="text" class="form-control" name=origin [(ngModel)]="form.origin" required #origin="ngModel">
+                <div class="alert-danger" *ngIf="origin.errors && signinForm.submitted">
+                    <div *ngIf="origin.errors.required"> Origin is Required</div>
+                </div>
+            </div>
+            <!--Quality Type-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Quality Type</label>
+                <input type="text" class="form-control col-sm-12" name=qualityType [(ngModel)]="form.qualityType" required #qualityType="ngModel">
+                <div class="alert-danger" *ngIf="qualityType.errors && signinForm.submitted">
+                    <div *ngIf="qualityType.errors.required"> Quality Type is Required</div>
+                </div>
+            </div>
+            <!--Description-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Description</label>
+                <textarea type="" class="form-control" name=description [(ngModel)]="form.description" required #description="ngModel"></textarea>
+                <div class="alert-danger" *ngIf="description.errors && signinForm.submitted">
+                    <div *ngIf="description.errors.required"> Description is Required</div>
+                </div>
+            </div>
+
+            <!--Year-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Year of Created</label>
+                <input type="text" class="form-control" name=year [(ngModel)]="form.year" #year="ngModel">
+            </div>
+            <!--Medium-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Medium</label>
+                <input type="text" class="form-control" name=medium [(ngModel)]="form.medium" required #medium="ngModel">
+                <div class="alert-danger" *ngIf="medium.errors && signinForm.submitted">
+                    <div *ngIf="medium.errors.required"> Medium is Required</div>
+                </div>
+            </div>
+            <!--Artist-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Artist</label>
+                <input type="text" class="form-control" name=artist [(ngModel)]="form.artist" #artist="ngModel">
+            </div>
+            <!--Domestic Shipping-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Domestic Shipping
+                <input type="checkbox" class="checkbox" name="domesticShipping" [(ngModel)]="form.domesticShipping"  #domesticShipping="ngModel">
+            </label>
+            </div>
+            <!--Offer Local Pickup-->
+            <div class="form-group" *ngIf="form.domesticShipping">
+                <label for="" class="col-sm-8 col-form-label">Offer Local Pick Up Price</label>
+                <input type="number" class="form-control" name=offerLocalPickup [(ngModel)]="form.offerLocalPickup" #offerLocalPickup="ngModel">
+            </div>
+            <!--Domestic Free Shipping-->
+            <div class="form-group" *ngIf="form.domesticShipping">
+                <label for="" class="col-sm-8 col-form-label">Domestic Free Shipping
+                <input type="checkbox" class="checkbox" name="domesticFreeShipping" [(ngModel)]="form.domesticFreeShipping"  #domesticFreeShipping="ngModel">
+            </label>
+            </div>
+            <!--International Shipping-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">International Shipping
+                <input type="checkbox" class="checkbox" name=internationalShipping [(ngModel)]="form.internationalShipping"  #internationalShipping="ngModel">
+            </label>
+            </div>
+
+            <!--International Free Shipping-->
+            <div class="form-group" *ngIf="form.internationalShipping">
+                <label for="" class="col-sm-8 col-form-label">International Free Shipping
+                <input type="checkbox" class="checkbox" name=internationalFreeShipping [(ngModel)]="form.internationalFreeShipping"  #internationalFreeShipping="ngModel">
+            </label>
+            </div>
+            <!--Shipping Cost-->
+            <div class="form-group" *ngIf="!form.internationalFreeShipping">
+                <label for="" class="col-sm-8 col-form-label">Shipping Cost</label>
+                <input type="number" class="form-control" name=shippingCost [(ngModel)]="form.shippingCost" #shippingCost="ngModel">
+            </div>
+            <!--Item Location-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Item Location </label>
+                <input type="text" class="form-control" name=itemLocation [(ngModel)]="form.itemLocation" required #itemLocation="ngModel">
+                <div class="alert-danger" *ngIf="itemLocation.errors && signinForm.submitted">
+                    <div *ngIf="itemLocation.errors.required"> Item Location is Required</div>
+                </div>
+            </div>
+
+            <!--Price-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Price</label>
+                <input type="number" class="form-control" name=price [(ngModel)]="form.price" required #price="ngModel">
+                <div class="alert-danger" *ngIf="price.errors && signinForm.submitted">
+                    <div *ngIf="price.errors.required"> Price is Required</div>
+                </div>
+            </div>
+
+            <!--Type-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Select the Type Of the Sell item</label>
+                <select id="type" name=type [(ngModel)]="optionValue">
+                    <option value="auction">Auction Type</option>
+                    <option value="sell">Sell it Now</option>
+                </select>
+            </div>
+            <!--Starting Price-->
+            <div class="form-group" *ngIf="optionValue=='auction'">
+                <label for="" class="col-sm-8 col-form-label">Starting Price</label>
+                <input type="number" class="form-control" name=startingPrice [(ngModel)]="form.startingPrice" #startingPrice="ngModel" />
+            </div>
+
+            <!--Reserved Price-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Reserved Price</label>
+                <input type="number" class="form-control" name=reserverdPrice [(ngModel)]="form.reserverdPrice" #reserverdPrice="ngModel" />
+            </div>
+            <!--Sales Tax-->
+            <div class="form-group">
+                <label for="" class="col-sm-8 col-form-label">Sales Tax</label>
+                <input type="number" class="form-control" name=salesTax [(ngModel)]="form.salesTax" #salesTax="ngModel" />
+            </div>
+
+            <!--Return Domestic-->
+            <div class="form-group" *ngIf="form.domesticShipping">
+                <label for="" class="col-sm-8 col-form-label">Return Domestic
+                <input type="checkbox" class="checkbox" name=returnDomestic [(ngModel)]="form.returnDomestic"  #returnDomestic="ngModel" />
+            </label>
+            </div>
+
+            <!--Return International-->
+            <div class="form-group" *ngIf="form.internationalShipping">
+                <label for="" class="col-sm-8 col-form-label">Return International
+                <input type="checkbox" class="checkbox" name=returnInternational [(ngModel)]="form.returnInternational"  #returnInternational="ngModel" />
+            </label>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
