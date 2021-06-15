@@ -202,3 +202,7 @@ Here I have imported the JwtService from @nestjs/jwt. Then implement methods to 
 In the validate user method check email and password to validate the user. Since the password encrypted using bcrypt use the compareSync method to compare the passwords.
 In the login method first, get the user by email, and if the user exists then create a payload for the jwt using username. And use that payload to generate an access token. This access token is used to access the auction system.
 The validate token method is used to validate the access token that sends from the client.
+
+## Conclusion
+As a fresher, I have gone through lots of works to implement this system even though it seems to be very simple. In the future, I hope to implement this auction software at an advanced level. And hope you find this article interested. The opinions you are given will be helpful to me continue this work successfully. 
+Thank you for reading!!
