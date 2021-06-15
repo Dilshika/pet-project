@@ -45,7 +45,9 @@ Mongoose is a Nodejs based Object Data Modelling (ODM) library for MongoDB. Mong
 
 ## System Architecture
 The system architecture I have designed is as follows. I think it's the most suitable architecture design for this system.
-![architecture](images\architecture.png)
+
+![architecture](https://github.com/Dilshika/pet-project/blob/master/images/architecture.png)
+
 As you can see in the diagram the route to the server is going through an API gateway. Then API gateway referral to the suitable service and routes to it. So this API gateway restricts access to the backend.
 
 
