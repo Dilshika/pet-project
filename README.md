@@ -96,7 +96,7 @@ To more clear about the system we will see the use cases given below. The regist
 
 ![usecase-bidder](https://github.com/Dilshika/pet-project/blob/master/images/usecase-bidder.jpeg)
 
-![usecase-seller](https://github.com/Dilshika/pet-project/blob/master/images/usecase-seller.jpeg)
+![usecase-seller](https://github.com/Dilshika/pet-project/blob/master/images/usecase-seller.png)
 
 ![usecase-admin](https://github.com/Dilshika/pet-project/blob/master/images/usecase-admin.jpeg)
 
