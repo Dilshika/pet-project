@@ -50,6 +50,155 @@ The system architecture I have designed is as follows. I think it's the most sui
 
 As you can see in the diagram the route to the server is going through an API gateway. Then API gateway referral to the suitable service and routes to it. So this API gateway restricts access to the backend.
 
+## Why API Gateway?
+In theoretically, a client can make requests to a microservice directly. Basically, what the API service does is accepts remote requests and return a response. But if you have large-scaled APIs this is not simple as it seems to be.
+The direct access of microservices means being overuse and being abused. And the backend becomes more exposed. This is not a good manner to implement a system. So, we need to find a suitable solution to this.
+The best solution I came up with is to implement an API gateway. API gateway sits between client and backend service as a management tool. It also works as a reverse proxy to the system, that accepts all API calls. And It's a way to decouple client and backend services. That means using API gateway we can set backend restrictions to the client.
+
+## Microservices
+In the Sample Implementation phase, we will discuss more microservices. Here simply described the purpose of each service. First, we see how a microservice will work.
+
+![microservice](https://github.com/Dilshika/pet-project/blob/master/images/microservice.png)
+
+As shown in the diagram a microservice has a REST API and its own database. And microservices communicate with each other. For example, each microservice has to communicate with an authentication service to know if the user is authenticated. In this system, there are fourteen services and four services implemented. In the future, I hope to complete the whole system.
+
+### Auth Service
+This is an authentication and authorization service for the Auction application.
+### Artwork Service
+Artwork service is for creating, reading, and deleting artworks.
+### Bidding Service
+In this service, auction events are created and users can bid for the active auctions.
+### Address Service
+User's addresses are stored here. Users can create, update, read and delete the address and can have more than one address.
+### Photos Service
+Artwork-related photos are stored in this service. Users can read and save images. Admin can delete images.
+### Message Service
+In this service, users can send messages to another user. Users can create, read, delete messages.
+### Review Service
+In this service customer reviews are created, read, update and delete.
+### Comment Service
+In this service, users can create, read, update and delete comments for particular artwork.
+### Add to Bucket Service
+Users can add artworks to the bucket. The operations happen regarding add-to-buckets handle here.
+### Payment Service
+All the operations that regarding payments handle in this service.
+### Shipping Service
+Shipping operations are handling by this Service.
+### Suggestion Service
+This service is to suggest items to the user. By using their past transactions, search list, and watchlist.
+### Notification Service
+Notification Service is used to send notifications to the users.
+### Profile Service
+This service is for handling operations regarding users' profiles.
+
+## Use cases
+To more clear about the system we will see the use cases given below. The registered user can act as both bidder and seller. But their actions become vary as the role they choose to play. The admin is the person who handles the system. So I hope to implement an admin portal to do the specific tasks that the admin can do. Therefore it's not visible to the web page and cannot access from there.
+
+![usecase-bidder](https://github.com/Dilshika/pet-project/blob/master/images/usecase-bidder.jpeg)
+
+![usecase-seller](https://github.com/Dilshika/pet-project/blob/master/images/usecase-seller.jpeg)
+
+![usecase-admin](https://github.com/Dilshika/pet-project/blob/master/images/usecase-admin.jpeg)
+
+# Sample Implementation
+## Auth Service
+In this phase, I am going to describe the auth service I have built. Authentication is verifying who the person is user says. This involves checking the username, email, password, or token that was signed. I have implemented token-based authentication to authenticate users.
+Let's see step by step how this service is implemented. Before that, we clear out what is token-based authentication why it is used.
+JSON Web Token-Based Authentication
+The token is a piece of data that is meaningless or cannot use on its own. But it can use to secure the application. JSON Web Token(JWT) is a base64 encoded token that consists of header, payload, and signature. Token-based authentication works by ensuring that every request to a server with a signed token, which the server verifies for authenticity and only responds to the request.
+Tokens use for authentication because they are stateless and contain all the information that needs for authentication. They can be generated from anywhere, as it is decoupled from token verification. Within the token, we can also specify user roles and permissions, and resources that users can access. JSON web tokens are signed using a secret(HMAC algorithm) or using a private/public key pair (RSA algorithm).
+So if someone able to decode the token still the signature is different authentication fails. So it is secured to use.
+Now Let's see how this auth service works. The following diagram shows how the auction service works.
+
+![auth](https://github.com/Dilshika/pet-project/blob/master/images/authenticatio.png)
+
+As you can see, when a user registers, the HTTP request sends to the API gateway. Then gateway chooses the auth service and sends that request. After auth service checks if there is any other user who exists with the same credentials. If not create a new user and sends the response back to the frontend. 
+When the user login to the system-auth service generates an access token and sends it to the frontend. Then, that access token is used to access the system.
+
+Let's see how to generate a JSON web token and validate it. First, install the required file @nestjs/jwt.
+
+```
+$ npm install --save @nestjs/jwt
+```
+Now we need to add JwtService to the auth module. Here we have given a secret to sign the jwt.
+```
+import { Module } from '@nestjs/common';
+import { AuthService } from './service/auth.service';
+import { AuthController } from './controller/auth.controller';
+import { JwtModule} from '@nestjs/jwt';
+import { jwtConstants } from './constants';
+
+@Module({
+  imports:[
+    JwtModule.register({
+      secret:jwtConstants.secret,
+      signOptions:{expiresIn:'3600s'}
+    }),
+  ],
+  providers: [AuthService],
+  controllers: [AuthController],
+  
+})
+export class AuthModule {}
+```
+
+Now we can generate real JWT. Now let's create an AuthService service class where we can implement our business logic. In the AuthService add the following codes.
+
+```
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { compareSync } from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+import { UserService } from 'src/user/service/user.service';
+import { User } from 'src/user/model/user.model';
+
+@Injectable()
+export class AuthService {
+    constructor(private jwtService:JwtService,
+        private userService:UserService){}
+
+    //validate user
+    async validateUser(email:string,password:string):Promise<User>{
+        try{
+            const user=await this.userService.getUserByEmail(email);
+            if(compareSync(password,user?.password)){
+                return user;
+            }
+            return null;
+        }catch(error){
+            Logger.log(error);
+            throw error;
+        }
+   }
 
 
+   //signin
+   async login(users:User){
+       const user=this.userService.getUserByEmail(users.email);
+        if(!user){
+            throw new BadRequestException('Invalid Credintials');
+        }
 
+        const payload={id:(await user).username};
+        console.log(payload);
+
+        return {
+           username:(await user).username,
+           accesssToken:this.jwtService.sign(payload)
+       };
+   }
+        
+   //validate token
+   validateToken(jwt:string){
+       return this.jwtService.verify(jwt);
+   }
+
+   
+   
+
+}
+```
+
+Here I have imported the JwtService from @nestjs/jwt. Then implement methods to validate user, login user, and validate the token.
+In the validate user method check email and password to validate the user. Since the password encrypted using bcrypt use the compareSync method to compare the passwords.
+In the login method first, get the user by email, and if the user exists then create a payload for the jwt using username. And use that payload to generate an access token. This access token is used to access the auction system.
+The validate token method is used to validate the access token that sends from the client.
